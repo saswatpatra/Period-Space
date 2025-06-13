@@ -323,28 +323,41 @@
             margin-bottom: 30px;
         }
         
+        /* Improved Back Button Styles */
         .back-btn {
-            background-color: var(--pink-light);
-            color: #7C2D69;
-            border: none;
+            background-color: white;
+            color: var(--gray-dark);
+            border: 2px solid var(--gray-light);
             border-radius: 12px;
-            padding: 8px 16px;
+            padding: 10px 20px;
             font-family: 'Inter', sans-serif;
             font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
-            transition: all 0.2s ease;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         
         .back-btn:hover {
-            background-color: #F9A8D4;
-            transform: translateX(-3px);
+            background-color: var(--gray-light);
+            transform: translateX(-4px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
         
         .back-btn:active {
             transform: translateX(0);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .back-btn span {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-btn:hover span {
+            transform: translateX(-2px);
         }
         
         .page-title {
@@ -517,6 +530,11 @@
                 top: auto;
                 padding: 0;
             }
+            
+            .back-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -550,7 +568,7 @@
         <!-- Header with Back Button -->
         <div class="header">
             <button class="back-btn" id="back-basics-btn">
-                <span>←</span> Back
+                <span>←</span> Back to Home
             </button>
         </div>
         
@@ -644,7 +662,7 @@
         <!-- Header with Back Button -->
         <div class="header">
             <button class="back-btn" id="back-men-btn">
-                <span>←</span> Back
+                <span>←</span> Back to Home
             </button>
         </div>
         
@@ -693,7 +711,7 @@
         <div class="accordion">
             <div class="accordion-header">
                 <span>Supporting Female Friends & Family</span>
-                <span class="tip-title">▼</span>
+                <span class="icon">▼</span>
             </div>
             <div class="accordion-content">
                 <div class="tip-box">
