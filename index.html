@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Period Space - Learn About Menstruation</title>
+    <meta name="description" content="A safe, stigma-free zone to learn, understand, and talk about periods – for everyone.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for easy theming */
+        :root {
+            --pink-primary: #EC4899;
+            --pink-light: #F9A8D4;
+            --pink-bg: #FBCFE8;
+            --blue-primary: #60A5FA;
+            --blue-light: #A5D8FF;
+            --blue-bg: #C7D2FE;
+            --purple-light: #E0BBE4;
+            --gray-dark: #4B5563;
+            --gray-medium: #6B7280;
+            --gray-light: #E5E7EB;
+            --bg-gradient-start: #FFEAF4;
+            --bg-gradient-end: #FFFDF9;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            color: var(--gray-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+            animation: fadeIn 0.8s ease-out;
+            overflow-y: auto;
+            height: 100vh;
+        }
+        
+        /* Background Blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.5;
+            z-index: -1;
+            animation: float 30s ease-in-out infinite;
+        }
+        
+        .blob-pink {
+            background-color: var(--pink-bg);
+            width: 300px;
+            height: 300px;
+            top: -50px;
+            left: -50px;
+            animation-delay: 0s;
+        }
+        
+        .blob-blue {
+            background-color: var(--blue-bg);
+            width: 350px;
+            height: 350px;
+            bottom: -50px;
+            right: -50px;
+            animation-delay: 5s;
+        }
+        
+        /* Content Styles */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: auto;
+            padding: 20px 0;
+            flex: 1 0 auto;
+            justify-content: center;
+        }
+        
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(3rem, 6vw, 4rem);
+            font-weight: 700;
+            color: var(--pink-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        /* Textured Title Effect */
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, 
+                rgba(236,72,153,0.3) 0%, 
+                rgba(236,72,153,0.6) 20%, 
+                rgba(236,72,153,0.8) 50%, 
+                rgba(236,72,153,0.6) 80%, 
+                rgba(236,72,153,0.3) 100%);
+            border-radius: 50%;
+            filter: blur(2px);
+            transform: scaleX(0.9);
+            opacity: 0.7;
+        }
+        
+        h1::before {
+            content: 'Period Space';
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: transparent;
+            background: linear-gradient(135deg, 
+                rgba(255,255,255,0.8) 0%, 
+                rgba(255,255,255,0.4) 50%, 
+                rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: none;
+            z-index: -1;
+            animation: textureShift 8s infinite alternate;
+        }
+        
+        .tagline {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--gray-medium);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        /* Button Styles */
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 500;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-width: 220px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 18px;
+            background: inherit;
+            transform: translateZ(-5px);
+            filter: brightness(0.9);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px) translateZ(5px);
+        }
+        
+        .btn:hover::before {
+            transform: translateY(3px) translateZ(-8px);
+            filter: brightness(0.85);
+        }
+        
+        .btn:active {
+            transform: translateY(1px) translateZ(0);
+        }
+        
+        .btn:active::before {
+            transform: translateY(0) translateZ(-5px);
+        }
+        
+        .btn:focus {
+            outline: none;
+        }
+        
+        .btn-basics {
+            background-color: var(--pink-light);
+            color: #7C2D69;
+            box-shadow: 0 6px 0 #D977B0, 
+                        0 12px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-basics::before {
+            background-color: #D977B0;
+        }
+        
+        .btn-men {
+            background-color: var(--blue-light);
+            color: #1E40AF;
+            box-shadow: 0 6px 0 #93C5FD, 
+                        0 12px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-men::before {
+            background-color: #93C5FD;
+        }
+        
+        .btn-chat {
+            background-color: var(--purple-light);
+            color: #5B21B6;
+            box-shadow: 0 6px 0 #C084FC, 
+                        0 12px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-chat::before {
+            background-color: #C084FC;
+        }
+        
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 0.8rem 20px;
+            color: var(--gray-medium);
+            font-size: 0.85rem;
+            width: 100%;
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #000;
+            opacity: 0.1;
+        }
+        
+        .footer-left, .footer-center, .footer-right {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0 10px;
+        }
+        
+        .footer-left {
+            margin-right: auto;
+        }
+        
+        .footer-center {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .footer-right {
+            margin-left: auto;
+        }
+        
+        .footer-attribution {
+            font-style: italic;
+        }
+        
+        /* Content Pages Styles (hidden by default) */
+        .content-page {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            flex: 1;
+            padding-bottom: 20px;
+            overflow: visible;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+        
+        .back-btn {
+            background-color: var(--pink-light);
+            color: #7C2D69;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: #F9A8D4;
+            transform: translateX(-3px);
+        }
+        
+        .back-btn:active {
+            transform: translateX(0);
+        }
+        
+        .page-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: var(--pink-primary);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        /* Accordion Styles */
+        .accordion {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header {
+            padding: 18px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .basics-page .accordion-header {
+            background-color: var(--pink-light);
+            color: #7C2D69;
+        }
+        
+        .men-page .accordion-header {
+            background-color: var(--blue-light);
+            color: #1E40AF;
+        }
+        
+        .accordion-header:hover {
+            filter: brightness(0.95);
+        }
+        
+        .basics-page .accordion-header.active {
+            background-color: var(--pink-primary);
+            color: white;
+        }
+        
+        .men-page .accordion-header.active {
+            background-color: var(--blue-primary);
+            color: white;
+        }
+        
+        .accordion-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .accordion-content.show {
+            padding: 20px;
+            max-height: none;
+            overflow: visible;
+        }
+        
+        .accordion-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .accordion-content ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        
+        .accordion-content li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .icon.rotate {
+            transform: rotate(180deg);
+        }
+        
+        /* Tips Section */
+        .tip-box {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tip-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes textureShift {
+            0% {
+                transform: translateX(-2px) translateY(-2px);
+            }
+            25% {
+                transform: translateX(2px) translateY(0);
+            }
+            50% {
+                transform: translateX(0) translateY(2px);
+            }
+            75% {
+                transform: translateX(-1px) translateY(-1px);
+            }
+            100% {
+                transform: translateX(1px) translateY(1px);
+            }
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+                max-width: 300px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            body {
+                padding: 20px 10px;
+            }
+            
+            footer {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+            
+            .footer-left, .footer-center, .footer-right {
+                margin: 0;
+                text-align: center;
+                transform: none;
+                top: auto;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Blobs -->
+    <div class="blob blob-pink"></div>
+    <div class="blob blob-blue"></div>
+    
+    <!-- Landing Page Content -->
+    <div class="container" id="landing-page">
+        <h1>Period Space</h1>
+        <p class="tagline">A safe, stigma-free zone to learn, understand, and talk about periods – for everyone.</p>
+        
+        <div class="button-container">
+            <button class="btn btn-basics" id="basics-btn">
+                <span>📘</span> Basics About Periods
+            </button>
+            
+            <button class="btn btn-men" id="men-btn">
+                <span>👨</span> What Should Men Do?
+            </button>
+            
+            <button class="btn btn-chat">
+                <span>🤖</span> Chat with FlowBuddy
+            </button>
+        </div>
+    </div>
+    
+    <!-- Basics Page Content (hidden by default) -->
+    <div class="content-page basics-page" id="basics-page">
+        <!-- Header with Back Button -->
+        <div class="header">
+            <button class="back-btn" id="back-basics-btn">
+                <span>←</span> Back
+            </button>
+        </div>
+        
+        <!-- Main Content -->
+        <h1 class="page-title">Period Basics</h1>
+        
+        <!-- Accordion Section -->
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>What is a period?</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <p>A period, or menstruation, is the regular discharge of blood and mucosal tissue from the inner lining of the uterus through the vagina. It's part of the menstrual cycle that prepares the body for pregnancy each month.</p>
+                <p>Periods typically start between ages 10-16 (this is called menarche) and continue until menopause (usually between ages 45-55).</p>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>The Menstrual Cycle Explained</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <p>The average menstrual cycle lasts 28 days, but can range from 21 to 35 days in adults. The cycle has four phases:</p>
+                <ul>
+                    <li><strong>Menstrual Phase (Days 1-5):</strong> The uterine lining sheds, resulting in period bleeding.</li>
+                    <li><strong>Follicular Phase (Days 6-14):</strong> The pituitary gland releases FSH, stimulating egg development.</li>
+                    <li><strong>Ovulation (Around Day 14):</strong> An egg is released from the ovary.</li>
+                    <li><strong>Luteal Phase (Days 15-28):</strong> The uterine lining thickens in preparation for pregnancy.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>Common Period Products</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <p>There are several options for managing menstrual flow:</p>
+                <ul>
+                    <li><strong>Pads:</strong> Adhesive strips worn in underwear to absorb flow</li>
+                    <li><strong>Tampons:</strong> Inserted into the vagina to absorb flow internally</li>
+                    <li><strong>Menstrual Cups:</strong> Reusable silicone cups inserted to collect flow</li>
+                    <li><strong>Period Underwear:</strong> Special absorbent underwear</li>
+                    <li><strong>Reusable Cloth Pads:</strong> Washable fabric pads</li>
+                </ul>
+                <p>It's important to change products regularly (every 4-8 hours) to prevent infection.</p>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>Managing Period Symptoms</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <p>Common symptoms and ways to manage them:</p>
+                <ul>
+                    <li><strong>Cramps:</strong> Use heat pads, gentle exercise, or over-the-counter pain relievers</li>
+                    <li><strong>Bloating:</strong> Reduce salt intake, stay hydrated, and eat potassium-rich foods</li>
+                    <li><strong>Mood swings:</strong> Practice stress-reduction techniques and get enough sleep</li>
+                    <li><strong>Fatigue:</strong> Maintain iron levels through diet and consider supplements if needed</li>
+                </ul>
+                <p>If symptoms are severe (heavy bleeding, extreme pain), consult a healthcare provider as this could indicate conditions like endometriosis or PCOS.</p>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>Period Health & Hygiene</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <p>Maintaining good hygiene during your period is essential:</p>
+                <ul>
+                    <li>Wash your genital area regularly with water (avoid harsh soaps)</li>
+                    <li>Change menstrual products frequently (every 4-8 hours)</li>
+                    <li>Wash hands before and after changing products</li>
+                    <li>Dispose of used products properly (wrap pads/tampons before throwing away)</li>
+                    <li>Clean menstrual cups thoroughly between uses</li>
+                    <li>Wear clean, breathable underwear</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- What Should Men Do Page (hidden by default) -->
+    <div class="content-page men-page" id="men-page">
+        <!-- Header with Back Button -->
+        <div class="header">
+            <button class="back-btn" id="back-men-btn">
+                <span>←</span> Back
+            </button>
+        </div>
+        
+        <!-- Main Content -->
+        <h1 class="page-title">What Should Men Do?</h1>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>Understanding Periods</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <p>As a man, understanding menstruation is the first step to being supportive. Remember:</p>
+                <ul>
+                    <li>Periods are a natural biological process, not something to be ashamed of</li>
+                    <li>Every person's experience is different - some have mild symptoms, others severe pain</li>
+                    <li>Hormonal changes can cause mood swings, fatigue, and other symptoms</li>
+                    <li>It's not "just about bleeding" - there are many physical and emotional effects</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>How to Support Your Partner</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="tip-box">
+                    <div class="tip-title">💕 Emotional Support</div>
+                    <p>Be patient and understanding. Mood swings are normal due to hormonal changes. Don't take things personally if she seems irritable.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">🛌 Physical Comfort</div>
+                    <p>Offer to get a heating pad, make tea, or give a gentle massage if she has cramps. Sometimes just asking "How can I help?" means a lot.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">🛍️ Practical Help</div>
+                    <p>Don't be squeamish about buying period products if needed. Know her preferred brands and types.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>Supporting Female Friends & Family</span>
+                <span class="tip-title">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="tip-box">
+                    <div class="tip-title">👩‍👧 For Your Sister/Daughter</div>
+                    <p>Be a safe person she can talk to about periods. Help normalize conversations about menstruation in your family.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">👵 For Your Mother</div>
+                    <p>Understand that perimenopause and menopause can be challenging too. Be patient with mood changes and offer support.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">👭 For Female Friends</div>
+                    <p>Don't make period jokes at their expense. Be understanding if they need to cancel plans due to severe symptoms.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>What Not to Do</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="tip-box">
+                    <div class="tip-title">❌ Avoid These Behaviors</div>
+                    <ul>
+                        <li>Don't make jokes about PMS or moodiness</li>
+                        <li>Don't act grossed out or uncomfortable about periods</li>
+                        <li>Don't minimize their pain or symptoms ("It can't be that bad")</li>
+                        <li>Don't expect them to "just push through" severe symptoms</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">✅ Do These Instead</div>
+                    <ul>
+                        <li>Educate yourself about menstrual health</li>
+                        <li>Keep period products at your place if you have a partner who menstruates</li>
+                        <li>Speak up when other men make inappropriate period comments</li>
+                        <li>Normalize conversations about menstruation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <span>Going the Extra Mile</span>
+                <span class="icon">▼</span>
+            </div>
+            <div class="accordion-content">
+                <div class="tip-box">
+                    <div class="tip-title">🌟 Thoughtful Gestures</div>
+                    <p>Consider keeping a "period care kit" at your place with her preferred products, chocolate, a heating pad, and pain relievers.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">📚 Educate Yourself</div>
+                    <p>Learn about conditions like endometriosis and PCOS that can make periods especially painful. This shows genuine care and understanding.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title">🗣️ Advocate for Change</div>
+                    <p>Support menstrual equity initiatives in your community, like making period products freely available in schools and public spaces.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-left">Github</div>
+        <div class="footer-center">
+            <p class="footer-attribution">With ❤️ Saswat Patra</p>
+        </div>
+        <div class="footer-right">v1.0</div>
+    </footer>
+    
+    <script>
+        // DOM Elements
+        const landingPage = document.getElementById('landing-page');
+        const basicsPage = document.getElementById('basics-page');
+        const menPage = document.getElementById('men-page');
+        const basicsBtn = document.getElementById('basics-btn');
+        const menBtn = document.getElementById('men-btn');
+        const backBasicsBtn = document.getElementById('back-basics-btn');
+        const backMenBtn = document.getElementById('back-men-btn');
+        
+        // Show Basics Page
+        basicsBtn.addEventListener('click', function() {
+            landingPage.style.display = 'none';
+            basicsPage.style.display = 'block';
+            document.querySelector('.basics-page .accordion-header').click();
+        });
+        
+        // Show Men Page
+        menBtn.addEventListener('click', function() {
+            landingPage.style.display = 'none';
+            menPage.style.display = 'block';
+            document.querySelector('.men-page .accordion-header').click();
+        });
+        
+        // Show Landing Page (from basics)
+        backBasicsBtn.addEventListener('click', function() {
+            basicsPage.style.display = 'none';
+            landingPage.style.display = 'flex';
+            window.scrollTo(0, 0);
+        });
+        
+        // Show Landing Page (from men)
+        backMenBtn.addEventListener('click', function() {
+            menPage.style.display = 'none';
+            landingPage.style.display = 'flex';
+            window.scrollTo(0, 0);
+        });
+        
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const accordion = header.parentElement;
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('.icon');
+                
+                // Toggle active class on header
+                header.classList.toggle('active');
+                
+                // Toggle content visibility
+                content.classList.toggle('show');
+                
+                // Rotate icon
+                if (icon) {
+                    icon.classList.toggle('rotate');
+                }
+                
+                // Close other accordions if this one is opening
+                if (content.classList.contains('show')) {
+                    const page = accordion.closest('.content-page');
+                    if (page) {
+                        page.querySelectorAll('.accordion-content').forEach(otherContent => {
+                            if (otherContent !== content && otherContent.classList.contains('show')) {
+                                otherContent.classList.remove('show');
+                                const otherHeader = otherContent.previousElementSibling;
+                                otherHeader.classList.remove('active');
+                                const otherIcon = otherHeader.querySelector('.icon');
+                                if (otherIcon) {
+                                    otherIcon.classList.remove('rotate');
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Simple button interactions for chat button
+        document.querySelector('.btn-chat').addEventListener('click', function() {
+            // For demo purposes, just show an alert
+            const btnText = this.textContent.trim();
+            alert(`In a complete implementation, this would navigate to the "${btnText}" page or section.`);
+        });
+        
+        // Accessibility - ensure buttons can be focused
+        document.addEventListener('keyup', function(e) {
+            if (e.key === 'Tab') {
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.classList.toggle('focus-visible', document.activeElement === btn);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
